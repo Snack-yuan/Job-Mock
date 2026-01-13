@@ -16,7 +16,6 @@
     "semi": ["error", "always"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "indent": ["error", 2],
-    "linebreak-style": ["error", "unix"],
     "eol-last": ["error", "always"],
     "object-curly-spacing": ["error", "always"],
     "array-bracket-spacing": ["error", "never"],
