@@ -1,5 +1,6 @@
 import { ThumbsUp, MessageCircle } from "lucide-react";
 import type { Post } from "@/types";
+import { useState } from "react";
 
 interface PostCardProps {
   post: Post;

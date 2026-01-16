@@ -1,5 +1,5 @@
 import { TopBarNav } from "@/components/TopBarNav";
-import Taro from "@tarojs/taro";
+import { onBack } from "@/utils/back";
 import { useState } from "react";
 export default function CreatePostSheet() {
   const [postType, setPostType] = useState<"rant" | "guide" | "question">(
@@ -9,9 +9,6 @@ export default function CreatePostSheet() {
   const [content, setContent] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const onBack = () => {
-    Taro.navigateBack();
-  };
   const postTypes = [
     {
       value: "rant" as const,
@@ -70,8 +67,10 @@ export default function CreatePostSheet() {
         {/* 头部 */}
         <div className="flex items-center justify-between p-5 border-gray-100">
           <div>
-            <h2>发布内容</h2>
-            <p className="text-sm text-gray-500 mt-0.5">说出你的真实经历</p>
+            <h3>发布内容</h3>
+            <p className="text-sm text-gray-500 mt-0.5">
+              说出你的真实经历！！！
+            </p>
           </div>
         </div>
 
@@ -85,14 +84,14 @@ export default function CreatePostSheet() {
                 <button
                   key={type.value}
                   onClick={() => setPostType(type.value)}
-                  className={`flex flex-col items-center gap-2.5 p-4 rounded-2xl border-2 transition-all ${
+                  className={`flex flex-col items-center gap-2.5 p-3 rounded-2xl border-0 transition-all ${
                     postType === type.value
                       ? `border-transparent bg-gradient-to-br ${type.color} text-white shadow-lg scale-105`
                       : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                   }`}
                 >
-                  <span className="text-2xl">{type.emoji}</span>
-                  <span className="text-sm">{type.label}</span>
+                  <span className="text-xl">{type.emoji}</span>
+                  <span className="text-xs">{type.label}</span>
                 </button>
               ))}
             </div>
@@ -106,7 +105,7 @@ export default function CreatePostSheet() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="一句话说清你有多无语"
-              className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3.5 border-0 ring-1 ring-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
           </div>
 
@@ -134,7 +133,7 @@ export default function CreatePostSheet() {
                 <button
                   key={tag}
                   onClick={() => toggleTag(tag)}
-                  className={`px-4 py-2 rounded-full text-sm transition-all ${
+                  className={`px-4 py-2 rounded-full border-none text-xs transition-all ${
                     selectedTags.includes(tag)
                       ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md scale-105"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -156,7 +155,7 @@ export default function CreatePostSheet() {
                 </p>
               </div>
               <div
-                className={`relative w-14 h-7 rounded-full transition-colors ${
+                className={`relative shrink-0 w-14 h-7 rounded-full transition-colors ${
                   isAnonymous
                     ? "bg-gradient-to-r from-blue-500 to-purple-500"
                     : "bg-gray-300"
@@ -174,7 +173,7 @@ export default function CreatePostSheet() {
 
           {/* 提示 */}
           <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-4">
-            <p className="text-sm text-amber-800 leading-relaxed">
+            <p className="text-xs text-amber-800 leading-relaxed">
               请基于真实经历分享
               <br />
               避免泄露个人隐私
@@ -187,7 +186,7 @@ export default function CreatePostSheet() {
           <button
             onClick={handleSubmit}
             disabled={!title || !content}
-            className={`w-full py-4 rounded-xl transition-all ${
+            className={`w-full py-4 border-none ring-2  rounded-xl transition-all ${
               title && content
                 ? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 active:scale-[0.98] text-white shadow-lg"
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Search, PenSquare } from "lucide-react";
 import { PostCard } from "@/pages/postDetail/PostCard";
-import { emotionTags, mockPosts } from "../data/mockData";
+import { emotionTags, mockPosts } from "@/pages/data/mockData";
 import type { Post } from "@/types";
 
 interface HomePageProps {
@@ -24,13 +24,13 @@ export function HomePage({ onPostClick, onCreatePost }: HomePageProps) {
 
         {/* 搜索框 */}
         <div className="flex items-center justify-center relative p-2">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-5 h-5 text-gray-400" />
+          <Search className="absolute left-6 top-1/2 -translate-y-1/2 z-10 w-5 h-5 text-gray-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="搜索企业 / 话题 / 你关心的问题"
-            className="pl-12 py-2 w-[90%] bg-white/95 backdrop-blur rounded-2xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg placeholder:text-gray-400"
+            className="pl-10 py-4 w-[95%] bg-white/95 backdrop-blur rounded-2xl border-0 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg placeholder:text-gray-400"
           />
         </div>
 

@@ -9,7 +9,7 @@ interface TopBarNavProps {
 export function TopBarNav({ onBack, context, children }: TopBarNavProps) {
   return (
     <View className="relative h-full">
-      <div className="bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
+      <div className="bg-white border-b border-gray-100 fixed w-full top-0 z-10 shadow-sm">
         {/* 顶部导航 */}
         <div className="flex items-center gap-3 px-4 h-12">
           <button

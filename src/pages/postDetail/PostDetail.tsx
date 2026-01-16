@@ -135,7 +135,7 @@ export default function PostDetail() {
             <div className="flex flex-wrap mt-4 items-center gap-3">
               <button
                 onClick={() => setLiked(!liked)}
-                className={`flex items-center gap-2 px-4 py-3 rounded-full border-none transition-all ${
+                className={`flex items-center bg-white ring-2 ring-gray-200 gap-2 px-3 py-2 rounded-full border-none transition-all ${
                   liked
                     ? " ring-2 ring-red-500 bg-gradient-to-r from-red-50 to-pink-50 text-red-600"
                     : "ring-gray-200"
@@ -146,13 +146,13 @@ export default function PostDetail() {
                   我懂你 {post.likes + (liked ? 1 : 0)}
                 </span>
               </button>
-              <button className="flex items-center gap-2 px-4 py-3 rounded-full border-none ring-gray-200 hover:ring-blue-300 hover:ring-2 hover:bg-blue-50/50 transition-all">
+              <button className="flex items-center gap-2 bg-white ring-2 ring-gray-200 px-3 py-2 rounded-full border-none hover:ring-blue-300 hover:ring-2 hover:bg-blue-50/50 transition-all">
                 <MessageCircle className="w-4 h-4" />
                 <span className="text-sm">一起说</span>
               </button>
               <button
                 aria-label="分享此帖子"
-                className="flex items-center justify-center w-10 h-10 rounded-full border-none ring-gray-200 hover:ring-purple-300 hover:ring-2 hover:bg-purple-50/50 transition-all"
+                className="flex items-center justify-center w-10 h-10 rounded-full border-none bg-white ring-2 ring-gray-200 hover:ring-purple-300 hover:ring-2 hover:bg-purple-50/50 transition-all"
               >
                 <Share2 className="w-4 h-4" />
               </button>
@@ -180,7 +180,7 @@ export default function PostDetail() {
             <div className="px-5 py-4 border-b border-gray-100">
               <h4 className="flex items-center gap-2">
                 评论
-                <span className="text-sm text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
                   {mockComments.length}
                 </span>
               </h4>
@@ -196,7 +196,7 @@ export default function PostDetail() {
               mockComments.map((comment) => (
                 <div
                   key={comment.id}
-                  className="px-5 py-4 border-b border-gray-50 hover:bg-gray-50/50 transition-colors"
+                  className="px-5 py-4 border-b border-gray-50 transition-colors"
                 >
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full flex items-center justify-center text-white flex-shrink-0">
@@ -214,7 +214,7 @@ export default function PostDetail() {
                       <p className="text-sm text-gray-700 mb-3 leading-relaxed">
                         {comment.content}
                       </p>
-                      <button className="flex items-center gap-1.5 text-xs border-none text-gray-500 hover:text-red-600 hover:bg-red-50 hover:ring-2 hover:ring-red-600 px-2.5 py-1.5 rounded-lg transition-all">
+                      <button className="flex items-center gap-1.5 text-xs border-none bg-white text-gray-500 hover:text-red-600 hover:bg-red-50 hover:ring-2 hover:ring-red-600 px-2.5 py-1.5 rounded-lg transition-all">
                         <ThumbsUp className="w-3.5 h-3.5" />
                         <span className="tabular-nums">{comment.likes}</span>
                       </button>
@@ -227,7 +227,7 @@ export default function PostDetail() {
 
           {/* 举报入口 */}
           <div className="bg-white mt-4 p-4">
-            <button className="flex items-center gap-2 text-sm border-0 border-gray-200 text-gray-500 hover:text-red-600 hover:bg-red-50 px-3 py-2 rounded-lg transition-all">
+            <button className="flex items-center bg-white gap-2 text-sm border-0 border-gray-200 text-gray-500 hover:text-red-600 hover:bg-red-50 px-3 py-2 rounded-lg transition-all">
               <Flag className="w-4 h-4" />
               <div className="text-left">
                 <div>内容不合适？点这里反馈</div>
@@ -247,11 +247,11 @@ export default function PostDetail() {
               placeholder={
                 post.type === "question" ? "我来回答" : "说点什么..."
               }
-              className="w-[60%] px-2 py-1.5 bg-gray-100 rounded-full border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="w-[80%] px-2 py-4 bg-gray-100 rounded-full border-0 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
             <button
               disabled={!comment}
-              className={`px-6 w-[24%] shrink-0 py-2 rounded-full transition-all border-0 ${
+              className={`px-6 w-[25%] shrink-0 py-2 rounded-full transition-all border-0 ${
                 comment
                   ? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 active:scale-95 text-white shadow-lg"
                   : "bg-gray-200 text-gray-400"
