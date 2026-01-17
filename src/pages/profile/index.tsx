@@ -1,4 +1,5 @@
 import { TabLayout } from "@/components/TabLayout";
+import Taro from "@tarojs/taro";
 import {
   FileText,
   Bookmark,
@@ -12,11 +13,10 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-interface ProfilePageProps {
-  onNavigate: (page: string) => void;
-}
-
-export default function ProfilePage({ onNavigate }: ProfilePageProps) {
+export default function ProfilePage() {
+  const onNavigate = (page: string) => {
+    Taro.navigateTo({ url: `/pages/myProfileComponents/${page}/index` });
+  };
   const userStats = {
     rants: 6,
     guides: 2,
@@ -31,7 +31,7 @@ export default function ProfilePage({ onNavigate }: ProfilePageProps) {
           icon: FileText,
           label: "我发过的",
           count: userStats.rants,
-          page: "myPosts",
+          page: "myPosted",
         },
         {
           icon: Bookmark,
@@ -52,8 +52,8 @@ export default function ProfilePage({ onNavigate }: ProfilePageProps) {
     {
       title: "设置",
       items: [
-        { icon: Settings, label: "个人资料", page: "userSettings" },
-        { icon: Settings, label: "匿名设置", page: "anonymousSettings" },
+        { icon: Settings, label: "个人资料", page: "userSetting" },
+        { icon: Settings, label: "匿名设置", page: "anonymousSetting" },
         { icon: Shield, label: "隐私与安全", page: "privacySecurity" },
         { icon: Flag, label: "举报与反馈", page: "reportFeedback" },
         { icon: Info, label: "关于我们", page: "aboutUs" },
@@ -67,7 +67,7 @@ export default function ProfilePage({ onNavigate }: ProfilePageProps) {
         {/* 个人信息卡片 */}
         <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6 shadow-xl">
           <button
-            onClick={() => onNavigate("userSettings")}
+            onClick={() => onNavigate("userSetting")}
             className="w-full bg-transparent border-none rounded-2xl p-2 -m-2 transition-all active:scale-[0.98]"
           >
             <div className="flex items-center gap-2 mb-6">
