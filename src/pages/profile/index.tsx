@@ -54,7 +54,7 @@ export default function ProfilePage() {
       items: [
         { icon: Settings, label: "个人资料", page: "userSetting" },
         { icon: Settings, label: "匿名设置", page: "anonymousSetting" },
-        { icon: Shield, label: "隐私与安全", page: "privacySecurity" },
+        { icon: Shield, label: "隐私与安全", page: "privateSecurity" },
         { icon: Flag, label: "举报与反馈", page: "reportFeedback" },
         { icon: Info, label: "关于我们", page: "aboutUs" },
       ],
@@ -131,7 +131,7 @@ export default function ProfilePage() {
                         <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
                           <Icon className="w-4.5 h-4.5 text-white" />
                         </div>
-                        <span className="text-gray-700 group-hover:text-gray-900">
+                        <span className="text-gray-700 text-xs group-hover:text-gray-900">
                           {item.label}
                         </span>
                       </div>

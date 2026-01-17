@@ -1,168 +1,178 @@
+import { TopBarNav } from "@/components/TopBarNav";
 import { onBack } from "@/utils/back";
-import { ArrowLeft, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { MessageSquare, Send } from "lucide-react";
 import { useState } from "react";
 
-export default function AnonymousSettings() {
-  const [settings, setSettings] = useState({
-    defaultAnonymous: true,
-    hideProfile: true,
-    anonymousComment: true,
-    showBadge: false,
-  });
+export default function ReportFeedback() {
+  const [feedbackType, setFeedbackType] = useState<
+    "bug" | "suggestion" | "report" | "other"
+  >("suggestion");
+  const [content, setContent] = useState("");
+  const [contact, setContact] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const toggleSetting = (key: keyof typeof settings) => {
-    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const settingItems = [
+  const types = [
     {
-      key: "defaultAnonymous" as const,
-      icon: ShieldCheck,
-      title: "默认匿名发布",
-      description: "发布内容时默认开启匿名模式",
+      value: "bug" as const,
+      label: "Bug反馈",
+      emoji: "🐛",
+      color: "from-red-500 to-pink-500",
+    },
+    {
+      value: "suggestion" as const,
+      label: "功能建议",
+      emoji: "💡",
       color: "from-blue-500 to-cyan-500",
     },
     {
-      key: "hideProfile" as const,
-      icon: EyeOff,
-      title: "隐藏个人主页",
-      description: "其他人无法查看你的个人主页",
-      color: "from-purple-500 to-pink-500",
-    },
-    {
-      key: "anonymousComment" as const,
-      icon: Eye,
-      title: "评论时自动匿名",
-      description: "发表评论时自动使用匿名身份",
+      value: "report" as const,
+      label: "内容举报",
+      emoji: "⚠️",
       color: "from-amber-500 to-orange-500",
     },
     {
-      key: "showBadge" as const,
-      icon: ShieldCheck,
-      title: "显示实名认证标识",
-      description: "在非匿名状态下显示实名认证标识",
-      color: "from-green-500 to-emerald-500",
+      value: "other" as const,
+      label: "其他反馈",
+      emoji: "📝",
+      color: "from-purple-500 to-pink-500",
     },
   ];
 
-  return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-indigo-50/30 to-purple-50/20">
-      {/* 顶部导航 */}
-      <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 sticky top-0 z-10 shadow-lg">
-        <div className="flex items-center gap-3 px-4 h-14">
-          <button
-            aria-label="返回"
-            onClick={onBack}
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/20 active:bg-white/30 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </button>
-          <h2 className="text-white">匿名设置</h2>
-        </div>
+  const handleSubmit = () => {
+    if (!content) return;
+    setShowSuccess(true);
+    setTimeout(() => {
+      setShowSuccess(false);
+      setContent("");
+      setContact("");
+    }, 2000);
+  };
 
-        {/* 说明卡片 */}
-        <div className="px-4 pb-4">
-          <div className="bg-white/15 backdrop-blur-lg border border-white/20 rounded-2xl p-4">
-            <p className="text-sm text-white/90 leading-relaxed">
-              💡 匿名功能可以保护你的隐私
-              <br />
-              让你更自由地表达真实想法
-            </p>
-          </div>
-        </div>
+  const style =
+    "bg-gradient-to-br text-white from-orange-500 via-red-500 to-pink-500";
+  const bottomSlot = (
+    <div className="px-4 pb-4 w-full">
+      <div className="bg-white/15 backdrop-blur-lg border border-white/20 rounded-2xl p-3">
+        <p className="text-sm text-white/90">💌 你的反馈让我们变得更好</p>
       </div>
+    </div>
+  );
+  return (
+    <TopBarNav
+      onBack={onBack}
+      context="举报与反馈"
+      style={style}
+      bottomSlot={bottomSlot}
+    >
+      <div className="flex flex-col h-full bg-gradient-to-b from-orange-50/30 to-red-50/20">
+        {/* 内容区域 */}
+        <div className="flex-1 overflow-y-auto p-5">
+          {/* 反馈类型 */}
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 mb-4">
+            <h3 className="mb-4">选择反馈类型</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {types.map((type) => (
+                <button
+                  key={type.value}
+                  onClick={() => setFeedbackType(type.value)}
+                  className={`flex flex-col items-center gap-2 p-4 bg-transparent rounded-xl ring-2 border-none ring-gray-200 transition-all ${
+                    feedbackType === type.value
+                      ? `border-transparent bg-gradient-to-br ${type.color} text-white shadow-lg scale-105`
+                      : "border-gray-200 active:border-gray-300 active:bg-gray-50"
+                  }`}
+                >
+                  <span className="text-xl">{type.emoji}</span>
+                  <span className="text-xs">{type.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {/* 设置列表 */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-          {settingItems.map((item, index) => {
-            const Icon = item.icon;
-            const isEnabled = settings[item.key];
-
-            return (
-              <div
-                key={item.key}
-                className={`p-5 ${
-                  index !== settingItems.length - 1
-                    ? "border-b border-gray-50"
-                    : ""
-                }`}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className={`w-12 h-12 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-md`}
-                  >
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-gray-900">{item.title}</h3>
-                      <button
-                        aria-label={`切换 ${item.title} 设置`}
-                        onClick={() => toggleSetting(item.key)}
-                        className={`relative w-14 h-7 rounded-full transition-colors ${
-                          isEnabled
-                            ? `bg-gradient-to-r ${item.color}`
-                            : "bg-gray-300"
-                        }`}
-                      >
-                        <div
-                          className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-md transition-transform ${
-                            isEnabled ? "translate-x-8" : "translate-x-1"
-                          }`}
-                        />
-                      </button>
-                    </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
+          {/* 反馈内容 */}
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 mb-4">
+            <label className="block mb-3">
+              <div className="flex items-center gap-2 mb-2">
+                <MessageSquare className="w-4 h-4 text-gray-600" />
+                <span className="text-sm text-gray-700">详细描述</span>
               </div>
-            );
-          })}
+              <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder={
+                  feedbackType === "bug"
+                    ? "请描述你遇到的问题，包括操作步骤和预期结果"
+                    : feedbackType === "suggestion"
+                    ? "说说你的想法，我们会认真考虑"
+                    : feedbackType === "report"
+                    ? "描述你要举报的内容和原因"
+                    : "告诉我们你的想法"
+                }
+                rows={8}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+              />
+            </label>
+
+            <label className="block">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm text-gray-700">联系方式（选填）</span>
+              </div>
+              <input
+                type="text"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                placeholder="留下邮箱或微信，方便我们联系你"
+                className="w-full px-4 py-3 border-none ring-1 ring-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              />
+            </label>
+          </div>
+
+          {/* 提示 */}
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <span className="text-xl">💡</span>
+              <div className="text-sm text-blue-900 leading-relaxed">
+                <p className="mb-2">温馨提示：</p>
+                <ul className="space-y-1 text-xs text-blue-800">
+                  <li>反馈内容会在1-3个工作日内处理</li>
+                  <li>重要问题我们会第一时间联系你</li>
+                  <li>感谢你让社区变得更好！</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* 提交按钮 */}
+          <button
+            onClick={handleSubmit}
+            disabled={!content}
+            className={`w-full py-4 rounded-xl flex items-center justify-center border-none gap-2 transition-all ${
+              content
+                ? "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 active:scale-[0.98] text-white shadow-lg"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            }`}
+          >
+            <Send className="w-5 h-5" />
+            <span>提交反馈</span>
+          </button>
         </div>
 
-        {/* 提示信息 */}
-        <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4">
-          <div className="flex items-start gap-3">
-            <span className="text-2xl">⚠️</span>
-            <div>
-              <h4 className="text-sm text-amber-900 mb-1">温馨提示</h4>
-              <p className="text-sm text-amber-800 leading-relaxed">
-                即使开启匿名，也请遵守社区规范，不要发布违法违规内容。我们会保留必要的日志信息以配合监管要求。
+        {/* 成功提示 */}
+        {showSuccess && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-8 max-w-sm w-full text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">✓</span>
+              </div>
+              <h3 className="mb-2">提交成功</h3>
+              <p className="text-sm text-gray-600">
+                感谢你的反馈
+                <br />
+                我们会认真处理
               </p>
             </div>
           </div>
-        </div>
-
-        {/* 匿名规则 */}
-        <div className="mt-4 bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-          <h3 className="mb-4 flex items-center gap-2">
-            <span className="w-1.5 h-5 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></span>
-            匿名规则说明
-          </h3>
-          <div className="space-y-3 text-sm text-gray-600">
-            <div className="flex items-start gap-2">
-              <span className="text-blue-500 mt-1">•</span>
-              <p>匿名状态下，其他用户无法看到你的昵称和头像</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-purple-500 mt-1">•</span>
-              <p>你的发布记录和收藏仅自己可见</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-pink-500 mt-1">•</span>
-              <p>匿名不代表可以随意发布不当内容</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-amber-500 mt-1">•</span>
-              <p>管理员可以查看匿名用户的真实身份</p>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
-    </div>
+    </TopBarNav>
   );
 }

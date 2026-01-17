@@ -46,7 +46,7 @@ export default function RantPage() {
                 <button
                   key={topic.tag}
                   onClick={() => setActiveTag(topic.tag)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full border-2 transition-all whitespace-nowrap shadow-md active:scale-95 ${
+                  className={`flex items-center gap-2 border-none ring-1 ring-gray-100 px-4 py-2.5 rounded-full transition-all whitespace-nowrap shadow-md active:scale-95 ${
                     activeTag === topic.tag
                       ? "bg-white text-red-600 border-white scale-105"
                       : "bg-white/20 backdrop-blur text-white border-white/30 hover:bg-white/30"

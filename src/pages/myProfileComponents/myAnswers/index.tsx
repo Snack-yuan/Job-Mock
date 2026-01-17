@@ -1,5 +1,6 @@
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import { onBack } from "@/utils/back";
+import { TopBarNav } from "@/components/TopBarNav";
 
 export default function MyAnswers() {
   const myAnswers = [
@@ -31,98 +32,92 @@ export default function MyAnswers() {
       likes: 42,
     },
   ];
-
-  return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-green-50/30 to-emerald-50/20">
-      {/* 顶部导航 */}
-      <div className="bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 sticky top-0 z-10 shadow-lg">
-        <div className="flex items-center gap-3 px-4 h-14">
-          <button
-            aria-label="返回"
-            onClick={onBack}
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/20 active:bg-white/30 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </button>
-          <h2 className="text-white">我回答的</h2>
-        </div>
-
-        <div className="px-4 pb-4">
-          <div className="bg-white/15 backdrop-blur-lg border border-white/20 rounded-2xl p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl text-white mb-1">
-                  {myAnswers.length}
-                </div>
-                <p className="text-sm text-white/80">回答总数</p>
-              </div>
-              <div className="border-l border-white/20 pl-4">
-                <div className="text-2xl text-white mb-1">85</div>
-                <p className="text-sm text-white/80">获得赞同</p>
-              </div>
-            </div>
+  const style =
+    "bg-gradient-to-br text-white from-green-500 via-emerald-500 to-teal-500";
+  const bottomSlot = (
+    <div className="px-4 pb-4 w-full">
+      <div className="bg-white/15 backdrop-blur-lg border border-white/20 rounded-2xl p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-2xl text-white mb-1">{myAnswers.length}</div>
+            <p className="text-sm text-white/80">回答总数</p>
+          </div>
+          <div className="border-l border-white/20 pl-4">
+            <div className="text-2xl text-white mb-1">85</div>
+            <p className="text-sm text-white/80">获得赞同</p>
           </div>
         </div>
-      </div>
-
-      {/* 回答列表 */}
-      <div className="flex-1 overflow-y-auto">
-        {myAnswers.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 px-4">
-            <div className="text-6xl mb-4">💬</div>
-            <p className="text-gray-600 text-center mb-2">还没有回答记录</p>
-            <p className="text-gray-500 text-sm text-center">
-              去帮助其他求职者吧
-            </p>
-          </div>
-        ) : (
-          <div className="p-4 space-y-4">
-            {myAnswers.map((answer) => (
-              <div
-                key={answer.id}
-                className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-lg hover:border-green-200 transition-all cursor-pointer"
-              >
-                {/* 原问题 */}
-                <div className="mb-4 pb-4 border-b border-gray-100">
-                  <div className="flex items-start gap-2 mb-2">
-                    <MessageCircle className="w-4 h-4 text-gray-400 mt-1 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-900 mb-1 line-clamp-2">
-                        {answer.question}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        来自 {answer.questionAuthor}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 我的回答 */}
-                <div className="mb-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xs">我</span>
-                    </div>
-                    <span className="text-sm text-gray-700">的回答</span>
-                  </div>
-                  <p className="text-sm text-gray-700 leading-relaxed pl-8">
-                    {answer.myAnswer}
-                  </p>
-                </div>
-
-                {/* 底部信息 */}
-                <div className="flex items-center justify-between text-sm text-gray-500 pl-8">
-                  <span>{answer.timestamp}</span>
-                  <div className="flex items-center gap-1.5 text-green-600">
-                    <span>👍</span>
-                    <span className="tabular-nums">{answer.likes}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </div>
+  );
+
+  return (
+    <TopBarNav
+      onBack={onBack}
+      context="我回答的"
+      style={style}
+      bottomSlot={bottomSlot}
+    >
+      <div className="flex flex-col h-full bg-gradient-to-b from-green-50/30 to-emerald-50/20">
+        {/* 回答列表 */}
+        <div className="flex-1 overflow-y-auto">
+          {myAnswers.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 px-4">
+              <div className="text-6xl mb-4">💬</div>
+              <p className="text-gray-600 text-center mb-2">还没有回答记录</p>
+              <p className="text-gray-500 text-sm text-center">
+                去帮助其他求职者吧
+              </p>
+            </div>
+          ) : (
+            <div className="p-4 space-y-4">
+              {myAnswers.map((answer) => (
+                <div
+                  key={answer.id}
+                  className="bg-white rounded-2xl border p-5 shadow-lg border-green-200"
+                >
+                  {/* 原问题 */}
+                  <div className="mb-4 pb-4 border-b border-gray-100">
+                    <div className="flex items-start gap-2 mb-2">
+                      <MessageCircle className="w-4 h-4 text-gray-400 mt-1 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-900 mb-1 line-clamp-2">
+                          {answer.question}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          来自 {answer.questionAuthor}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 我的回答 */}
+                  <div className="mb-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs">我</span>
+                      </div>
+                      <span className="text-sm text-gray-700">的回答</span>
+                    </div>
+                    <p className="text-sm text-gray-700 leading-relaxed pl-8">
+                      {answer.myAnswer}
+                    </p>
+                  </div>
+
+                  {/* 底部信息 */}
+                  <div className="flex items-center justify-between text-sm text-gray-500 pl-8">
+                    <span>{answer.timestamp}</span>
+                    <div className="flex items-center gap-1.5 text-green-600">
+                      <span>👍</span>
+                      <span className="tabular-nums">{answer.likes}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </TopBarNav>
   );
 }

@@ -6,6 +6,7 @@ import type { Post } from "@/types";
 import { useState } from "react";
 import Taro from "@tarojs/taro";
 import { onBack } from "@/utils/back";
+import { TopBarNav } from "@/components/TopBarNav";
 
 export default function MySaved() {
   const onPostClick = (post: Post) => {
@@ -20,54 +21,47 @@ export default function MySaved() {
   const savedPosts = mockPosts.slice(0, 5);
   const savedCompanies = mockCompanies.slice(0, 3);
 
-  return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-amber-50/30 to-orange-50/20">
-      {/* 顶部导航 */}
-      <div className="bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 sticky top-0 z-10 shadow-lg">
-        <div className="flex items-center gap-3 px-4 h-14">
-          <button
-            aria-label="返回"
-            onClick={onBack}
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/20 active:bg-white/30 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </button>
-          <h2 className="text-white">我收藏的</h2>
-        </div>
-
-        {/* 分类标签 */}
-        <div className="px-4 pb-4">
-          <div className="flex gap-3">
-            <button
-              onClick={() => setActiveTab("posts")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full border-2 transition-all flex-1 justify-center ${
-                activeTab === "posts"
-                  ? "bg-white text-orange-600 border-white scale-105"
-                  : "bg-white/20 backdrop-blur text-white border-white/30 hover:bg-white/30"
-              }`}
-            >
-              <span>帖子</span>
-              <span className="text-xs bg-white/30 px-2 py-0.5 rounded-full">
-                {savedPosts.length}
-              </span>
-            </button>
-            <button
-              onClick={() => setActiveTab("companies")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full border-2 transition-all flex-1 justify-center ${
-                activeTab === "companies"
-                  ? "bg-white text-orange-600 border-white scale-105"
-                  : "bg-white/20 backdrop-blur text-white border-white/30 hover:bg-white/30"
-              }`}
-            >
-              <span>企业避雷</span>
-              <span className="text-xs bg-white/30 px-2 py-0.5 rounded-full">
-                {savedCompanies.length}
-              </span>
-            </button>
-          </div>
-        </div>
+  const bottomSlot = (
+    <div className="px-4 pb-4 w-full">
+      <div className="flex gap-2">
+        <button
+          onClick={() => setActiveTab("posts")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border-none ring-2 ring-white transition-all flex-1 justify-center ${
+            activeTab === "posts"
+              ? "bg-white text-orange-600 ring-white scale-105"
+              : "bg-white/20 backdrop-blur text-white ring-white/30 hover:bg-white/30"
+          }`}
+        >
+          <span>帖子</span>
+          <span className="text-xs bg-white/30 px-2 py-0.5 rounded-full">
+            {savedPosts.length}
+          </span>
+        </button>
+        <button
+          onClick={() => setActiveTab("companies")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-full border-none ring-2 ring-white transition-all flex-1 justify-center ${
+            activeTab === "companies"
+              ? "bg-white text-orange-600 ring-white scale-105"
+              : "bg-white/20 backdrop-blur text-white ring-white/30 hover:bg-white/30"
+          }`}
+        >
+          <span>企业避雷</span>
+          <span className="text-xs bg-white/30 px-2 py-0.5 rounded-full">
+            {savedCompanies.length}
+          </span>
+        </button>
       </div>
-
+    </div>
+  );
+  const style =
+    "bg-gradient-to-br text-white text-white from-blue-500 via-purple-500 to-pink-500";
+  return (
+    <TopBarNav
+      onBack={onBack}
+      context="我收藏的"
+      style={style}
+      bottomSlot={bottomSlot}
+    >
       {/* 内容列表 */}
       <div className="flex-1 overflow-y-auto">
         {activeTab === "posts" ? (
@@ -108,6 +102,6 @@ export default function MySaved() {
           </div>
         )}
       </div>
-    </div>
+    </TopBarNav>
   );
 }

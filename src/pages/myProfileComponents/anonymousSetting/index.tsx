@@ -1,5 +1,6 @@
+import { TopBarNav } from "@/components/TopBarNav";
 import { onBack } from "@/utils/back";
-import { ArrowLeft, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 
 export default function AnonymousSettings() {
@@ -45,33 +46,26 @@ export default function AnonymousSettings() {
     },
   ];
 
-  return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-indigo-50/30 to-purple-50/20">
-      {/* 顶部导航 */}
-      <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 sticky top-0 z-10 shadow-lg">
-        <div className="flex items-center gap-3 px-4 h-14">
-          <button
-            aria-label="返回"
-            onClick={onBack}
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/20 active:bg-white/30 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-white" />
-          </button>
-          <h2 className="text-white">匿名设置</h2>
-        </div>
-
-        {/* 说明卡片 */}
-        <div className="px-4 pb-4">
-          <div className="bg-white/15 backdrop-blur-lg border border-white/20 rounded-2xl p-4">
-            <p className="text-sm text-white/90 leading-relaxed">
-              💡 匿名功能可以保护你的隐私
-              <br />
-              让你更自由地表达真实想法
-            </p>
-          </div>
-        </div>
+  const style =
+    "bg-gradient-to-br text-white from-indigo-500 via-purple-500 to-pink-500";
+  const bottomSlot = (
+    <div className="px-4 pb-4 w-full">
+      <div className="bg-white/15 backdrop-blur-lg border border-white/20 rounded-2xl p-4">
+        <p className="text-sm text-white/90 leading-relaxed">
+          💡 匿名功能可以保护你的隐私
+          <br />
+          让你更自由地表达真实想法
+        </p>
       </div>
-
+    </div>
+  );
+  return (
+    <TopBarNav
+      context="匿名设置"
+      onBack={onBack}
+      style={style}
+      bottomSlot={bottomSlot}
+    >
       {/* 设置列表 */}
       <div className="flex-1 overflow-y-auto p-4">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
@@ -90,18 +84,18 @@ export default function AnonymousSettings() {
               >
                 <div className="flex items-start gap-4">
                   <div
-                    className={`w-12 h-12 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-md`}
+                    className={`w-10 h-10 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-md`}
                   >
                     <Icon className="w-6 h-6 text-white" />
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-gray-900">{item.title}</h3>
+                      <h4 className="text-gray-900">{item.title}</h4>
                       <button
                         aria-label={`切换 ${item.title} 设置`}
                         onClick={() => toggleSetting(item.key)}
-                        className={`relative w-14 h-7 rounded-full transition-colors ${
+                        className={`relative w-14 h-7 rounded-full transition-colors shrink-0 border-none ${
                           isEnabled
                             ? `bg-gradient-to-r ${item.color}`
                             : "bg-gray-300"
@@ -163,6 +157,6 @@ export default function AnonymousSettings() {
           </div>
         </div>
       </div>
-    </div>
+    </TopBarNav>
   );
 }
