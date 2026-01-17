@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PenSquare } from "lucide-react";
 import { PostCard } from "@/pages/postDetail/PostCard";
-import { hotTopics, mockPosts } from "../data/mockData";
+import { hotTopics, mockPosts } from "@/pages/data/mockData";
 import type { Post } from "@/types";
 import { TabLayout } from "@/components/TabLayout";
 import Taro from "@tarojs/taro";

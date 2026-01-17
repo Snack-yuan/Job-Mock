@@ -28,7 +28,7 @@ Job-Mock 是一个基于 Taro 框架的多端统一前端项目，旨在通过�
 ### 1. 克隆项目
 
 ```bash
-git clone <your-repo-url>
+https://github.com/Snack-yuan/Job-Mock.git
 cd Job-Mock
 ```
 

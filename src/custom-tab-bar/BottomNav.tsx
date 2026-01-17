@@ -1,6 +1,6 @@
 import { Home, MessageSquare, ShieldAlert, User } from "lucide-react";
 import Taro, { useDidShow } from "@tarojs/taro";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function BottomNav() {
   const [activeTab, setActiveTab] = useState("");
@@ -26,15 +26,40 @@ export function BottomNav() {
     },
   ];
 
-  useDidShow(() => {
-    const pages = Taro.getCurrentPages();
-    const current = pages[pages.length - 1];
-    const route = current.route;
-    const matched = tabList.find((tab) => tab.pagePath === route);
-    if (matched) {
-      setActiveTab(matched.id);
-    }
-  });
+  // useDidShow(() => {
+  //   const pages = Taro.getCurrentPages();
+  //   const current = pages[pages.length - 1];
+  //   const route = current.route;
+  //   const matched = tabList.find((tab) => tab.pagePath === route);
+  //   if (matched) {
+  //     setActiveTab(matched.id);
+  //   }
+  // });
+  // 监听路由变化，更新激活的标签
+  useEffect(() => {
+    const updateActiveTab = () => {
+      const pages = Taro.getCurrentPages();
+      if (pages.length > 0) {
+        const current = pages[pages.length - 1];
+        const route = current.route;
+        const matched = tabList.find((tab) => tab.pagePath === route);
+        if (matched) {
+          setActiveTab(matched.id);
+        }
+      }
+    };
+
+    // 初始化时设置当前页面
+    updateActiveTab();
+    // 监听路由变化
+    const eventChannel = Taro.eventCenter.on("routeChange", updateActiveTab);
+    return () => {
+      // 清理事件监听
+      if (eventChannel) {
+        eventChannel.off("routeChange", updateActiveTab);
+      }
+    };
+  }, []);
 
   const switchTab = (tab) => {
     if (activeTab !== tab.id) {
